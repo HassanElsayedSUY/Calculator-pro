@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<!-- <!DOCTYPE html> : السطر ده بيقول للمتصفح إن الملف ده نوعه HTML5، وده الإصدار الأحدث من لغة HTML. -->
+
+<!-- <html> : ده العنصر الرئيسي اللي بيحتوي على كل عناصر صفحة الويب. -->
+<html lang="ar" dir="rtl">
+<!-- lang="ar" : الخاصية دي بتحدد إن اللغة الأساسية للصفحة هي اللغة العربية، وده بيساعد محركات البحث والمتصفحات تفهم محتوى الصفحة. -->
+<!-- dir="rtl" : الخاصية دي بتحدد اتجاه النص في الصفحة من اليمين للشمال (Right-to-Left)، وده أساسي للصفحات العربية. -->
+
+<head>
+    <!-- <head> : الجزء ده بيحتوي على كل المعلومات الوصفية والبيانات التعريفية (metadata) عن الصفحة، زي العنوان وملفات الـ CSS والخطوط، ودي حاجات المستخدم مش بيشوفها مباشرة في الصفحة. -->
+    
+    <meta charset="UTF-8">
+    <!-- <meta charset="UTF-8"> : ده بيحدد ترميز الحروف المستخدم في الصفحة. UTF-8 هو الترميز العالمي اللي بيدعم كل اللغات تقريبًا (ومنها العربي والإنجليزي)، وبيضمن إن كل الحروف تظهر بشكل سليم من غير مشاكل أو رموز غريبة. -->
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <meta name="viewport" ...> : السطر ده مهم جدًا للتجاوب مع الشاشات المختلفة (Responsive Design). -->
+    <!-- width=device-width : بيخلي عرض الصفحة يساوي عرض شاشة الجهاز اللي بتتعرض عليه (موبايل، تابلت، كمبيوتر). -->
+    <!-- initial-scale=1.0 : بيحدد درجة التكبير الأولية للصفحة لما تفتح، والقيمة 1.0 بتمنع التكبير أو التصغير التلقائي. -->
+
+    <title>Calc Pro</title>
+    <!-- <title> : ده اللي بيحدد عنوان الصفحة اللي بيظهر في التاب بتاع المتصفح فوق، وكمان بيظهر في نتائج البحث. -->
+    
+    <!-- استدعاء مكتبة Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- استدعاء خطوط من Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Kalam:wght@300&family=Chakra+Petch:wght@600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* <style> : هنا بنكتب أكواد CSS خاصة بينا عشان نعدل على التصميم ونضيف لمسة شخصية مش موجودة في Tailwind. --> */
+        
+        :root {
+            /* :root : ده بيسمح لنا نعرّف متغيرات (variables) نقدر نستخدمها في أي مكان في الـ CSS. دي طريقة ممتازة عشان نتحكم في الألوان بسهولة، خصوصًا لما نعمل وضع فاتح وغامق. */
+            /* دي متغيرات الوضع الفاتح (Light Mode) */
+            --bg-color: #e0e5ec; /* لون الخلفية الرئيسي */
+            --bg-gradient-start: #f3f7fa; /* بداية لون التدرج في الخلفية */
+            --bg-gradient-end: #d1d9e6; /* نهاية لون التدرج في الخلفية */
+            --text-color: #4a5568; /* لون النص الأساسي */
+            --primary-shadow-light: #a3b1c6; /* لون الظل الفاتح للتأثير ثلاثي الأبعاد */
+            --primary-shadow-dark: #ffffff; /* لون الظل الغامق (هنا أبيض عشان يدي تأثير الإضاءة) */
+            --inset-shadow-light: #a3b1c6; /* لون الظل الداخلي الفاتح (للشاشة مثلاً) */
+            --inset-shadow-dark: #ffffff; /* لون الظل الداخلي الغامق */
+            --btn-operator-color: #d65d0e; /* لون زراير العمليات الحسابية (+, -, *) */
+            --btn-action-color: #1d4ed8; /* لون زراير الوظائف (AC, C) */
+            --digital-text-color: #2c3e50; /* لون الخط الرقمي اللي على الشاشة */
+            --digital-shadow-color: rgba(100, 150, 200, 0.2); /* لون التوهج اللي حوالين الخط الرقمي */
+            --history-bg: #dbe1e8; /* لون خلفية لوحة السجل */
+            --history-text-color: #374151; /* لون النص جوه السجل */
+        }
+
+        .dark {
+            /* .dark : ده كلاس بنضيفه على الـ body عشان نفعّل الوضع الغامق (Dark Mode). لما الكلاس ده يكون موجود، المتغيرات اللي جواه هي اللي بتشتغل. */
+            /* ودي نفس المتغيرات اللي فوق بس بقيم مختلفة تناسب الوضع الغامق. */
+            --bg-color: #1f2937;
+            --bg-gradient-start: #2c3a4b;
+            --bg-gradient-end: #1a202c;
+            --text-color: #d1d5db;
+            --primary-shadow-light: #111827;
+            --primary-shadow-dark: #2d3a4b;
+            --inset-shadow-light: #111827;
+            --inset-shadow-dark: #2d3a4b;
+            --btn-operator-color: #fb923c;
+            --btn-action-color: #60a5fa;
+            --digital-text-color: #bae6fd;
+            --digital-shadow-color: rgba(56, 189, 248, 0.4);
+            --history-bg: #374151;
+            --history-text-color: #e5e7eb;
+        }
+
+        body { 
+            /* body : بننسق هنا العنصر body اللي هو جسم الصفحة كلها. */
+            font-family: 'Inter', sans-serif; /* بنحدد الخط الأساسي للصفحة كلها. */
+            background-image: radial-gradient(circle, var(--bg-gradient-start), var(--bg-gradient-end)); /* بنعمل خلفية متدرجة (gradient) باستخدام المتغيرات اللي عرفناها فوق عشان الشكل يبقى أحلى. */
+            -webkit-tap-highlight-color: transparent; /* بنشيل اللون الأزرق اللي بيظهر على الموبايل لما تدوس على أي زرار أو لينك، عشان نحافظ على شكل التصميم. */
+            transition: background-color 0.3s ease; /* بنضيف تأثير حركة ناعم لما لون الخلفية يتغير (بين الوضع الفاتح والغامق). */
+        }
+        
+        .digital-display-font { 
+            /* .digital-display-font : ده كلاس خاص عملناه عشان ننسق شاشة العرض. */
+            font-family: 'Chakra Petch', sans-serif; /* بنستخدم الخط ده عشان يدي إحساس الخطوط الرقمية بتاعة الآلات الحاسبة القديمة. */
+            color: var(--digital-text-color); /* بنستخدم متغير اللون اللي عرفناه فوق للشاشة. */
+            font-weight: 700; /* بنخلي الخط سميك (bold). */
+            text-shadow: 0 0 10px var(--digital-shadow-color), 0 0 2px var(--digital-text-color); /* بنضيف تأثير توهج (glow) للنص عشان يبان كأنه منور. */
+        }
+
+        .calculator-body { 
+            /* .calculator-body : تنسيق الهيكل الرئيسي للآلة الحاسبة. */
+            background: var(--bg-color); /* بنطبق لون الخلفية من المتغيرات. */
+            box-shadow: 9px 9px 16px var(--primary-shadow-light), -9px -9px 16px var(--primary-shadow-dark); /* أهم سطر في شكل التصميم (Neumorphism)، بنعمل ظل من ناحيتين بألوان مختلفة عشان يدي إحساس إن العنصر بارز عن الخلفية. */
+            transition: all 0.3s ease; /* بنضيف حركة ناعمة لكل الخصائص لما تتغير. */
+        }
+        .display-container { 
+            /* .display-container : تنسيق حاوية شاشة العرض. */
+            background: var(--bg-color);
+            box-shadow: inset 5px 5px 10px var(--inset-shadow-light), inset -5px -5px 10px var(--inset-shadow-dark); /* بنستخدم ظل داخلي (inset) عشان يدي إحساس إن الشاشة غائرة لجوه. */
+            transition: all 0.3s ease;
+        }
+        .btn-neumorphic { 
+            /* .btn-neumorphic : تنسيق الزراير عشان تاخد نفس شكل التصميم البارز. */
+            background: var(--bg-color);
+            box-shadow: -5px -5px 10px var(--primary-shadow-dark), 5px 5px 10px var(--primary-shadow-light); /* نفس فكرة الظل المزدوج زي هيكل الآلة الحاسبة. */
+            transition: all 0.15s ease-in-out; /* حركة أنعم وأسرع شوية للزراير. */
+            color: var(--text-color); /* لون الأرقام اللي على الزراير. */
+        }
+        .btn-neumorphic:not(:active):hover {
+            /* بنضيف تأثير بسيط لما الماوس ييجي على الزرار (من غير ما يكون مداس عليه). */
+            transform: translateY(-2px); /* بنرفع الزرار لفوق شوية. */
+            box-shadow: -7px -7px 12px var(--primary-shadow-dark), 7px 7px 12px var(--primary-shadow-light); /* بنزوّد الظل عشان يبان بارز أكتر. */
+        }
+        .btn-neumorphic:active { 
+            /* :active : بنطبق الستايل ده لحظة ما المستخدم بيدوس على الزرار. */
+            box-shadow: inset -5px -5px 10px var(--primary-shadow-dark), inset 5px 5px 10px var(--primary-shadow-light); /* بنعكس الظل ونخليه داخلي (inset) عشان يبان إن الزرار بيتغرز لجوه. */
+            transform: scale(0.98); /* بنصغر حجم الزرار سنة بسيطة عشان نأكد إحساس الضغطة. */
+        }
+        .btn-neumorphic:disabled { 
+            /* :disabled : بنطبق الستايل ده على الزراير المعطلة (زي زراير الحروف في وضع الأرقام العشرية). */
+            opacity: 0.4; /* بنقلل شفافية الزرار عشان يبان إنه مش شغال. */
+            pointer-events: none; /* بنمنع أي تفاعل مع الزرار (زي الدوس عليه). */
+            box-shadow: none; /* بنشيل الظل بتاعه. */
+        }
+        .btn-operator { color: var(--btn-operator-color); } /* بنخصص لون لزراير العمليات الحسابية. */
+        .btn-action { color: var(--btn-action-color); } /* بنخصص لون لزراير الوظائف. */
+        
+        .mode-switcher .active { 
+            /* .mode-switcher .active : تنسيق الزرار النشط في شريط تغيير الأوضاع (عادية، علمية، مبرمج). */
+            background: var(--bg-color);
+            box-shadow: inset 5px 5px 10px var(--inset-shadow-light), inset -5px -5px 10px var(--inset-shadow-dark); /* بنعمله ظل داخلي عشان يبان إنه هو اللي "مداس عليه". */
+            font-weight: 600; /* بنتقل خطه. */
+            color: #3b82f6; /* بنغير لونه عشان نميزه. */
+        }
+        .dark .mode-switcher .active {
+             /* بنحدد لون الزرار النشط في الوضع الغامق. */
+            color: #60a5fa;
+        }
+
+        .programmer-base-label.active {
+            /* .programmer-base-label.active : تنسيق اسم نظام العد النشط (HEX, DEC, BIN) في وضع المبرمج. */
+            background-color: rgba(59, 130, 246, 0.1); /* بنديله خلفية بلون أزرق خفيف. */
+            font-weight: 700; /* بنتقل خطه. */
+        }
+
+        .history-panel { 
+            /* .history-panel : تنسيق اللوحة اللي بيظهر فيها سجل العمليات. */
+            background: var(--history-bg); /* لون الخلفية من المتغيرات. */
+            border-radius: 1.25rem; /* بنخلي حوافها دائرية. */
+            max-height: 0; /* بنبدأ بارتفاع أقصى = صفر عشان تكون مخفية. */
+            opacity: 0; /* بنبدأ بشفافية = صفر (مخفية تمامًا). */
+            overflow: hidden; /* بنخفي أي محتوى يزيد عن حجم اللوحة. */
+            transition: all 0.5s ease-in-out; /* بنعمل حركة ظهور واختفاء ناعمة وبطيئة شوية. */
+            padding: 0; /* بنبدأ من غير أي حشو داخلي. */
+            margin-top: 0; /* بنبدأ من غير أي هامش علوي. */
+        }
+        .history-panel.open { 
+            /* .history-panel.open : الستايل ده بيتطبق لما بنضيف كلاس "open" عشان نظهر اللوحة. */
+            max-height: 12rem; /* بنسمح للارتفاع يزيد لحد قيمة معينة. */
+            opacity: 1; /* بنخليها ظاهرة بالكامل. */
+            padding: 0.75rem; /* بنضيف حشو داخلي. */
+            margin-top: 1rem; /* بنضيف هامش علوي عشان نفصلها عن اللي فوقيها. */
+        }
+
+        .history-item-text {
+            /* تنسيق النص جوه كل عنصر في السجل. */
+            color: var(--history-text-color); /* بنستخدم متغير لون النص بتاع السجل. */
+            font-size: 0.9rem; /* بنصغر الخط شوية عشان يبقى مناسب. */
+        }
+
+        /* تنسيق شكل الـ scrollbar جوه لوحة السجل عشان يبقى متماشي مع التصميم. */
+        .history-log::-webkit-scrollbar { width: 8px; } /* عرض الـ scrollbar. */
+        .history-log::-webkit-scrollbar-track { background: var(--bg-color); } /* لون الشريط اللي بيتحرك عليه. */
+        .history-log::-webkit-scrollbar-thumb { background: var(--primary-shadow-light); } /* لون المقبض نفسه. */
+    </style>
+</head>
+
+<body class="min-h-screen flex items-center justify-center p-2 sm:p-4">
+    <!-- <body> : ده جسم الصفحة الفعلي اللي بيظهر للمستخدم. -->
+    <!-- الكلاسات دي من Tailwind CSS: -->
+    <!-- min-h-screen : بيضمن إن أقل ارتفاع للجسم يكون قد ارتفاع الشاشة كلها (عشان لو المحتوى قليل، الخلفية تملى الشاشة). -->
+    <!-- flex : بيفعّل نظام Flexbox عشان نتحكم في محاذاة العناصر بسهولة. -->
+    <!-- items-center : بيعمل محاذاة رأسية للعناصر في النص. -->
+    <!-- justify-center : بيعمل محاذاة أفقية للعناصر في النص. -->
+    <!-- p-2 sm:p-4 : بيضيف حشو (padding) حوالين المحتوى (2 على الشاشات الصغيرة و 4 على الشاشات الأكبر). -->
+
+    <main class="calculator-body w-full max-w-md rounded-3xl p-4 sm:p-5 flex flex-col">
+        <!-- <main> : العنصر الرئيسي اللي بيحتوي على الآلة الحاسبة. -->
+        <!-- calculator-body : الكلاس اللي عملناه عشان نديها شكل الـ Neumorphism. -->
+        <!-- w-full : بتاخد العرض كله المتاح ليها. -->
+        <!-- max-w-md : بتحدد أقصى عرض ليها عشان متكبرش زيادة عن اللزوم على الشاشات الكبيرة. -->
+        <!-- rounded-3xl : بتخلي الحواف دائرية جدًا. -->
+        <!-- p-4 sm:p-5 : حشو داخلي. -->
+        <!-- flex flex-col : بنستخدم Flexbox تاني بس بنمط عمودي (column) عشان نرص العناصر فوق بعضها. -->
+        
+        <div class="flex justify-between items-center mb-4">
+            <!-- <div> : حاوية عشان نحط فيها الأيقونات والعنوان اللي فوق. -->
+            <!-- flex justify-between : بنرص العناصر اللي جواها على خط واحد وبنخلي مسافات متساوية بينهم (واحد على الشمال، واحد في النص، واحد على اليمين). -->
+            <!-- items-center : بنخليهم كلهم على نفس المستوى الرأسي. -->
+            <!-- mb-4 : بنضيف هامش سفلي (margin-bottom) عشان نسيب مسافة بينها وبين اللي تحتيها. -->
+            
+            <!-- ## التعديل: إضافة أيقونة مبدئية لزرار تغيير الثيم ## -->
+            <button id="theme-toggle" class="btn-neumorphic w-11 h-11 rounded-full flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+            </button>
+            
+            <h1 class="font-bold text-xl text-center flex-grow text-gray-600 dark:text-gray-300 mx-2">
+                Calculator By Hassan 
+            </h1>
+            
+            <!-- ## التعديل: إضافة أيقونة مبدئية لزرار الصوت ## -->
+             <button id="sound-toggle" class="btn-neumorphic w-11 h-11 rounded-full flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+             </button>
+        </div>
+        
+        <div class="mode-switcher flex justify-center items-center bg-gray-300/40 dark:bg-gray-700/40 rounded-full p-1 my-2">
+            <!-- حاوية شريط تغيير الأوضاع (عادية، علمية، مبرمج). -->
+            <button data-mode="programmer" class="w-1/3 py-1.5 px-2 text-sm rounded-full transition-all text-gray-600 dark:text-gray-300">مبرمج</button>
+            <button data-mode="scientific" class="w-1/3 py-1.5 px-2 text-sm rounded-full transition-all text-gray-600 dark:text-gray-300">علمية</button>
+            <button data-mode="standard" class="w-1/3 py-1.5 px-2 text-sm rounded-full transition-all active">عادية</button>
+        </div>
+
+        <div id="standard-display" class="display-container w-full h-28 rounded-2xl flex flex-col justify-between p-4 text-right overflow-hidden">
+            <!-- الشاشة الرئيسية في الوضع العادي والعلمي -->
+            <div id="history-display" class="h-8 text-gray-500 dark:text-gray-400 text-lg truncate"></div> <!-- الجزء العلوي الصغير اللي بيعرض العملية اللي فاتت -->
+            <div id="expression-display" class="digital-display-font h-16 text-[2.7rem] md:text-5xl flex items-end justify-end truncate" dir="ltr">0</div> <!-- الشاشة الرئيسية اللي بتعرض الأرقام الحالية -->
+        </div>
+        
+        <div id="programmer-display" class="display-container w-full rounded-2xl p-3 text-left hidden">
+            <!-- شاشة وضع المبرمج، بتبقى مخفية في الأول -->
+             <div class="grid grid-cols-[auto,1fr] items-center gap-x-3 gap-y-1 text-sm">
+                <!-- بنستخدم Grid عشان نرص أسماء الأنظمة (HEX, DEC) جنب الأرقام بتاعتها -->
+                <label data-base="16" class="programmer-base-label font-bold text-gray-500 dark:text-gray-400 text-right cursor-pointer p-1 rounded-md">HEX</label>
+                <p id="hex-display" class="digital-display-font text-xl truncate">0</p>
+                <label data-base="10" class="programmer-base-label font-bold text-gray-500 dark:text-gray-400 text-right cursor-pointer p-1 rounded-md">DEC</label>
+                <p id="dec-display" class="digital-display-font text-xl truncate">0</p>
+                <label data-base="8" class="programmer-base-label font-bold text-gray-500 dark:text-gray-400 text-right cursor-pointer p-1 rounded-md">OCT</label>
+                <p id="oct-display" class="digital-display-font text-xl truncate">0</p>
+                <label data-base="2" class="programmer-base-label font-bold text-gray-500 dark:text-gray-400 text-right cursor-pointer p-1 rounded-md">BIN</label>
+                <p id="bin-display" class="digital-display-font text-xl truncate">0</p>
+            </div>
+        </div>
+
+        <div class="mt-5">
+            <!-- دي الحاوية الرئيسية لكل الزراير -->
+            <div id="standard-buttons" class="grid grid-cols-4 gap-4">
+                 <!-- زراير الوضع العادي، بنستخدم Grid عشان نقسمهم 4 أعمدة -->
+                 <button data-action="clear" class="btn-neumorphic btn-action w-full h-16 rounded-2xl text-2xl font-medium">AC</button>
+                 <button data-action="backspace" class="btn-neumorphic btn-action w-full h-16 rounded-2xl flex items-center justify-center"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path><line x1="18" y1="9" x2="12" y2="15"></line><line x1="12" y1="9" x2="18" y2="15"></line></svg></button>
+                 <button data-action="percent" class="btn-neumorphic btn-action w-full h-16 rounded-2xl text-2xl font-medium">%</button>
+                 <button data-value=" / " data-action="operator" class="btn-neumorphic btn-operator w-full h-16 rounded-2xl text-2xl font-medium">÷</button>
+                 <button data-value="7" data-action="number" class="btn-neumorphic w-full h-16 rounded-2xl text-2xl font-medium">7</button><button data-value="8" data-action="number" class="btn-neumorphic w-full h-16 rounded-2xl text-2xl font-medium">8</button><button data-value="9" data-action="number" class="btn-neumorphic w-full h-16 rounded-2xl text-2xl font-medium">9</button>
+                 <button data-value=" * " data-action="operator" class="btn-neumorphic btn-operator w-full h-16 rounded-2xl text-2xl font-medium">×</button>
+                 <button data-value="4" data-action="number" class="btn-neumorphic w-full h-16 rounded-2xl text-2xl font-medium">4</button><button data-value="5" data-action="number" class="btn-neumorphic w-full h-16 rounded-2xl text-2xl font-medium">5</button><button data-value="6" data-action="number" class="btn-neumorphic w-full h-16 rounded-2xl text-2xl font-medium">6</button>
+                 <button data-value=" - " data-action="operator" class="btn-neumorphic btn-operator w-full h-16 rounded-2xl text-2xl font-medium">-</button>
+                 <button data-value="1" data-action="number" class="btn-neumorphic w-full h-16 rounded-2xl text-2xl font-medium">1</button><button data-value="2" data-action="number" class="btn-neumorphic w-full h-16 rounded-2xl text-2xl font-medium">2</button><button data-value="3" data-action="number" class="btn-neumorphic w-full h-16 rounded-2xl text-2xl font-medium">3</button>
+                 <button data-value=" + " data-action="operator" class="btn-neumorphic btn-operator w-full h-16 rounded-2xl text-2xl font-medium">+</button>
+                 <button data-value="0" data-action="number" class="btn-neumorphic col-span-2 w-full h-16 rounded-2xl text-2xl font-medium">0</button> <!-- زرار الصفر واخد مكان عمودين (col-span-2) -->
+                 <button data-value="." data-action="decimal" class="btn-neumorphic w-full h-16 rounded-2xl text-2xl font-medium">.</button>
+                 <button data-action="calculate" class="btn-neumorphic btn-operator w-full h-16 rounded-2xl text-2xl font-medium">=</button>
+            </div>
+            <div id="scientific-buttons" class="grid grid-cols-5 gap-3 hidden">
+                <!-- زراير الوضع العلمي، بنقسمهم 5 أعمدة، وبتبقى مخفية في الأول -->
+                <button data-action="parenthesis" data-value=")" class="btn-neumorphic btn-action w-full h-12 rounded-lg text-lg">(</button>
+                <button data-value="7" data-action="number" class="btn-neumorphic w-full h-12 rounded-lg text-lg">7</button>
+                <button data-value="8" data-action="number" class="btn-neumorphic w-full h-12 rounded-lg text-lg">8</button>
+                <button data-value="9" data-action="number" class="btn-neumorphic w-full h-12 rounded-lg text-lg">9</button>
+                <button data-action="clear" class="btn-neumorphic btn-action w-full h-12 rounded-lg text-lg">C</button>
+                <button data-action="parenthesis" data-value="(" class="btn-neumorphic btn-action w-full h-12 rounded-lg text-lg">)</button>
+                <button data-value="4" data-action="number" class="btn-neumorphic w-full h-12 rounded-lg text-lg">4</button>
+                <button data-value="5" data-action="number" class="btn-neumorphic w-full h-12 rounded-lg text-lg">5</button>
+                <button data-value="6" data-action="number" class="btn-neumorphic w-full h-12 rounded-lg text-lg">6</button>
+                <button data-action="backspace" class="btn-neumorphic btn-action w-full h-12 flex items-center justify-center"><svg width="20" height="20" viewBox="0 0 24 24"><path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z" fill="none" stroke="currentColor" stroke-width="2"></path><line x1="18" y1="9" x2="12" y2="15"></line><line x1="12" y1="9" x2="18" y2="15"></line></svg></button>
+                <button data-action="square" class="btn-neumorphic btn-action w-full h-12 rounded-lg text-lg">x²</button>
+                <button data-value="1" data-action="number" class="btn-neumorphic w-full h-12 rounded-lg text-lg">1</button>
+                <button data-value="2" data-action="number" class="btn-neumorphic w-full h-12 rounded-lg text-lg">2</button>
+                <button data-value="3" data-action="number" class="btn-neumorphic w-full h-12 rounded-lg text-lg">3</button>
+                <button data-value=" - " data-action="operator" class="btn-neumorphic btn-operator w-full h-12 rounded-lg text-xl">-</button>
+                <button data-action="sqrt" class="btn-neumorphic btn-action w-full h-12 rounded-lg text-lg">√x</button>
+                <button data-value="0" data-action="number" class="btn-neumorphic w-full h-12 rounded-lg text-lg">0</button>
+                <button data-value="." data-action="decimal" class="btn-neumorphic w-full h-12 rounded-lg text-lg">.</button>
+                <button data-action="calculate" class="btn-neumorphic btn-operator w-full h-12 rounded-lg text-xl">=</button>
+                <button data-value=" + " data-action="operator" class="btn-neumorphic btn-operator w-full h-12 rounded-lg text-xl">+</button>
+                <button data-action="sin" class="btn-neumorphic btn-action w-full h-12 rounded-lg text-base">sin</button>
+                <button data-action="cos" class="btn-neumorphic btn-action w-full h-12 rounded-lg text-base">cos</button>
+                <button data-action="tan" class="btn-neumorphic btn-action w-full h-12 rounded-lg text-base">tan</button>
+                <button data-value=" * " data-action="operator" class="btn-neumorphic btn-operator w-full h-12 rounded-lg text-xl">×</button>
+                <button data-value=" / " data-action="operator" class="btn-neumorphic btn-operator w-full h-12 rounded-lg text-xl">÷</button>
+            </div>
+            <div id="programmer-buttons" class="grid grid-cols-5 gap-3 hidden">
+                <!-- زراير وضع المبرمج، 5 أعمدة ومخفية في الأول -->
+                <button data-value="A" data-action="number" class="btn-neumorphic h-12 rounded-lg text-lg font-medium programmer-hex">A</button>
+                <button data-value=" & " data-action="operator" class="btn-neumorphic btn-action h-12 rounded-lg text-lg font-medium">AND</button>
+                <button data-value="7" data-action="number" class="btn-neumorphic h-12 rounded-lg text-lg font-medium">7</button><button data-value="8" data-action="number" class="btn-neumorphic h-12 rounded-lg text-lg font-medium">8</button><button data-value="9" data-action="number" class="btn-neumorphic h-12 rounded-lg text-lg font-medium">9</button>
+                <button data-value="B" data-action="number" class="btn-neumorphic h-12 rounded-lg text-lg font-medium programmer-hex">B</button>
+                <button data-value=" | " data-action="operator" class="btn-neumorphic btn-action h-12 rounded-lg text-lg font-medium">OR</button>
+                <button data-value="4" data-action="number" class="btn-neumorphic h-12 rounded-lg text-lg font-medium">4</button><button data-value="5" data-action="number" class="btn-neumorphic h-12 rounded-lg text-lg font-medium">5</button><button data-value="6" data-action="number" class="btn-neumorphic h-12 rounded-lg text-lg font-medium">6</button>
+                <button data-value="C" data-action="number" class="btn-neumorphic h-12 rounded-lg text-lg font-medium programmer-hex">C</button>
+                <button data-value=" ^ " data-action="operator" class="btn-neumorphic btn-action h-12 rounded-lg text-lg font-medium">XOR</button>
+                <button data-value="1" data-action="number" class="btn-neumorphic h-12 rounded-lg text-lg font-medium">1</button><button data-value="2" data-action="number" class="btn-neumorphic h-12 rounded-lg text-lg font-medium">2</button><button data-value="3" data-action="number" class="btn-neumorphic h-12 rounded-lg text-lg font-medium">3</button>
+                <button data-value="D" data-action="number" class="btn-neumorphic h-12 rounded-lg text-lg font-medium programmer-hex">D</button>
+                <button data-action="not" class="btn-neumorphic btn-action h-12 rounded-lg text-lg font-medium">NOT</button>
+                <button data-action="clear" class="btn-neumorphic btn-action h-12 rounded-lg text-lg font-medium">AC</button>
+                <button data-value="0" data-action="number" class="btn-neumorphic h-12 rounded-lg text-lg font-medium">0</button>
+                <button data-action="backspace" class="btn-neumorphic btn-action h-12 rounded-lg flex items-center justify-center"><svg width="20" height="20" viewBox="0 0 24 24"><path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z" fill="none" stroke="currentColor" stroke-width="2"></path><line x1="18" y1="9" x2="12" y2="15"></line><line x1="12" y1="9" x2="18" y2="15"></line></svg></button>
+                <button data-value="E" data-action="number" class="btn-neumorphic h-12 rounded-lg text-lg font-medium programmer-hex">E</button>
+                <button data-value="F" data-action="number" class="btn-neumorphic h-12 rounded-lg text-lg font-medium programmer-hex">F</button>
+                <button data-value=" + " data-action="operator" class="btn-neumorphic btn-operator h-12 rounded-lg text-lg font-medium">+</button>
+                <button data-value=" - " data-action="operator" class="btn-neumorphic btn-operator h-12 rounded-lg text-lg font-medium">-</button>
+                <button data-action="calculate" class="btn-neumorphic btn-operator h-12 rounded-lg text-lg font-medium">=</button>
+            </div>
+        </div>
+
+        <div id="history-toggle-bar" class="btn-neumorphic w-full h-10 rounded-full flex items-center justify-center cursor-pointer mt-5">
+            <!-- ده الشريط اللي بتدوس عليه عشان تفتح وتقفل لوحة السجل -->
+            <span class="text-gray-600 dark:text-gray-300">السجل</span>
+        </div>
+
+        <div id="history-panel" class="history-panel">
+            <!-- دي لوحة السجل نفسها، بتبقى مخفية في الأول -->
+            <div class="flex justify-between items-center px-2 pb-2 border-b border-gray-400/30 dark:border-gray-500/30">
+                <h3 class="font-semibold text-gray-700 dark:text-gray-200">سجل العمليات</h3>
+                <button id="clear-history-btn" class="text-sm text-red-500 hover:text-red-700 dark:text-red-400 dark:hover:text-red-500 font-semibold">مسح الكل</button>
+            </div>
+            <div id="history-log" class="h-full overflow-y-auto mt-2 pr-2 space-y-1">
+                <!-- هنا بيتحط سجل العمليات اللي بنضيفه بالجافاسكريبت -->
+                <p class="text-center text-gray-500 dark:text-gray-400">لا يوجد سجل بعد</p>
+            </div>
+        </div>
+    </main>
+
+    <script>
+    // <script> : هنا بيبدأ كود الجافاسكريبت اللي بيخلي الآلة الحاسبة تشتغل وتتفاعل مع المستخدم.
+
+        // --- الحالة بتاعة التطبيق (State) ---
+        // دي المتغيرات اللي بنخزن فيها كل حاجة بتحصل في الآلة الحاسبة
+        let currentMode = 'standard'; // الوضع الحالي (عادي، علمي، مبرمج)
+        let currentExpression = '0'; // العملية الحسابية اللي بتتكتب حاليًا على الشاشة
+        let history = []; // أراي (مصفوفة) بنخزن فيه كل العمليات اللي فاتت
+        let justCalculated = false; // متغير عشان نعرف إذا كنا لسه حاسبين ناتج ولا لأ (عشان لو المستخدم داس رقم جديد بعد يساوي، نبدأ عملية جديدة)
+        let programmerBase = 10; // نظام العد الحالي في وضع المبرمج (عشري، ثنائي، ...)
+        let isRadian = true; // متغير عشان نعرف شغالين بالراديان ولا بالدرجات في الوضع العلمي (حاليا مثبت على الراديان)
+        let isSoundOn = true; // متغير عشان نعرف صوت الزراير شغال ولا لأ
+        let audioCtx = null; // ده الـ "خلاط" بتاع الصوت، بنجهزه عشان نشغل الأصوات
+
+        // --- بنمسك عناصر الصفحة (DOM Elements) ---
+        // هنا بنجيب كل العناصر من ملف الـ HTML ونحطها في متغيرات عشان نقدر نتحكم فيها بالجافاسكريبت
+        const themeToggle = document.getElementById('theme-toggle'); // زرار تغيير الثيم (فاتح/غامق)
+        const soundToggle = document.getElementById('sound-toggle'); // زرار تشغيل/قفل الصوت
+        const body = document.body; // جسم الصفحة كله
+        const modeSwitcher = document.querySelector('.mode-switcher'); // شريط تغيير الأوضاع
+        const standardDisplay = document.getElementById('standard-display'); // شاشة الوضع العادي والعلمي
+        const programmerDisplay = document.getElementById('programmer-display'); // شاشة وضع المبرمج
+        const historyDisplay = document.getElementById('history-display'); // الشاشة الصغيرة اللي فوق اللي بتعرض العملية اللي فاتت
+        const expressionDisplay = document.getElementById('expression-display'); // الشاشة الرئيسية اللي بيتكتب عليها الأرقام
+        const hexDisplay = document.getElementById('hex-display'); // شاشة عرض النظام السداسي عشري
+        const decDisplay = document.getElementById('dec-display'); // شاشة عرض النظام العشري
+        const octDisplay = document.getElementById('oct-display'); // شاشة عرض النظام الثماني
+        const binDisplay = document.getElementById('bin-display'); // شاشة عرض النظام الثنائي
+        const allButtonsContainer = document.querySelector('.mt-5'); // الحاوية اللي فيها كل الزراير
+        const historyToggleBar = document.getElementById('history-toggle-bar'); // شريط فتح وإغلاق السجل
+        const historyPanel = document.getElementById('history-panel'); // لوحة السجل نفسها
+        const historyLog = document.getElementById('history-log'); // المكان اللي بتتعرض فيه العمليات جوه السجل
+        const clearHistoryBtn = document.getElementById('clear-history-btn'); // زرار مسح السجل
+
+        // --- أيقونات بصيغة SVG ---
+        // بنخزن شكل الأيقونات في متغيرات عشان نغيرها بسهولة لما ندوس على الزراير
+        const sunIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>`;
+        const moonIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>`;
+        const soundOnIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>`;
+        const soundOffIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>`;
+
+        // --- دالة تشغيل صوت الزراير ---
+        // الدالة دي مسؤولة عن عمل صوت "تكة" لما تدوس على أي زرار
+        function playClickSound() {
+            if (!isSoundOn) return; // لو الصوت مقفول، اخرج من الدالة ومتعملش حاجة
+            if (!audioCtx) { // لو الخلاط بتاع الصوت مش جاهز
+                try {
+                    // بنحاول ننشئ واحد جديد، بنحط الاتنين دول عشان نضمن إنها تشتغل على كل المتصفحات
+                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                } catch(e) {
+                    console.error("المتصفح بتاعك مش بيدعم الأصوات دي"); // لو فشل، بنطلع رسالة في الكونسول
+                    isSoundOn = false; return; // وبنقفل خاصية الصوت خالص
+                }
+            }
+            if (audioCtx.state === 'suspended') { audioCtx.resume(); } // بعض المتصفحات بتوقف الصوت تلقائيًا، هنا بنشغله تاني لو موقوف
+            const oscillator = audioCtx.createOscillator(); // بنعمل مصدر الموجة الصوتية
+            const gainNode = audioCtx.createGain(); // بنعمل متحكم في علو الصوت
+            oscillator.connect(gainNode); // بنوصل مصدر الصوت بالمتحكم
+            gainNode.connect(audioCtx.destination); // بنوصل المتحكم بالسماعات (مخرج الصوت النهائي)
+            oscillator.type = 'sine'; // بنحدد نوع الموجة (موجة جيبية بتدي صوت ناعم)
+            oscillator.frequency.setValueAtTime(600, audioCtx.currentTime); // بنحدد تردد الصوت (النغمة)
+            gainNode.gain.setValueAtTime(0.15, audioCtx.currentTime); // بنحدد علو الصوت (قيمة صغيرة عشان ميبقاش عالي ومزعج)
+            oscillator.start(audioCtx.currentTime); // بنشغل الصوت فورًا
+            oscillator.stop(audioCtx.currentTime + 0.05); // بنوقف الصوت بعد جزء صغير جدًا من الثانية عشان يبقى مجرد "تكة"
+        }
+
+        // --- دوال تطبيق الثيم والصوت ---
+        // دالة بتغير الثيم (الشكل) بتاع الآلة الحاسبة
+        const applyTheme = (theme) => {
+            if (theme === 'dark') { // لو الثيم المطلوب هو الداكن
+                body.classList.add('dark'); // بنضيف كلاس 'dark' على الـ body، والـ CSS هيتعامل معاه ويغير الألوان
+                themeToggle.innerHTML = sunIcon; // بنغير أيقونة الزرار لأيقونة الشمس (عشان لما تدوس عليها ترجع للوضع الفاتح)
+            } else { // لو الثيم المطلوب هو الفاتح
+                body.classList.remove('dark'); // بنشيل كلاس 'dark'
+                themeToggle.innerHTML = moonIcon; // بنغير أيقونة الزرار لأيقونة القمر
+            }
+        };
+        // دالة بتغير أيقونة الصوت
+        const applySoundState = () => {
+            soundToggle.innerHTML = isSoundOn ? soundOnIcon : soundOffIcon; // تعبير شرطي مختصر: لو الصوت شغال حط أيقونة الصوت العالي، وإلا حط أيقونة الصوت المقفول
+        };
+
+        // --- ربط الأحداث (Event Listeners) ---
+        // هنا بنقول للجافاسكريبت يعمل إيه لما المستخدم يتفاعل مع العناصر المختلفة
+        
+        // لما المستخدم يدوس على زرار تغيير الثيم
+        themeToggle.addEventListener('click', () => {
+            playClickSound(); // شغل صوت الدوسة
+            const newTheme = body.classList.contains('dark') ? 'light' : 'dark'; // شوف الثيم الحالي وإيه المفروض يبقى الجديد
+            applyTheme(newTheme); // طبّق الثيم الجديد
+            localStorage.setItem('calculator-theme', newTheme); // خزّن اختيار المستخدم في ذاكرة المتصفح عشان لما يفتح الموقع تاني يلاقيه زي ما سابه
+        });
+
+        // لما المستخدم يدوس على زرار الصوت
+        soundToggle.addEventListener('click', () => {
+            isSoundOn = !isSoundOn; // اعكس حالة الصوت (لو شغال اقفله، لو مقفول شغله)
+            applySoundState(); // طبّق حالة الأيقونة الجديدة
+            playClickSound(); // شغل صوت الدوسة (هنا عشان المستخدم يعرف إنه قفل أو فتح الصوت)
+        });
+
+        // لما المستخدم يدوس على أي زرار في شريط تغيير الأوضاع
+        modeSwitcher.addEventListener('click', (e) => {
+            const button = e.target.closest('button'); // بنحدد بالظبط أنهي زرار جوه الشريط هو اللي انداس عليه
+            if (!button || button.classList.contains('active')) return; // لو اللي انداس عليه مش زرار، أو هو أصلا الزرار النشط حاليًا، متعملش حاجة
+            
+            playClickSound(); // شغل صوت الدوسة
+            const newMode = button.dataset.mode; // بنجيب اسم الوضع الجديد من الـ data attribute بتاع الزرار
+            
+            modeSwitcher.querySelector('.active')?.classList.remove('active'); // بنشيل كلاس 'active' من على الزرار النشط القديم
+            button.classList.add('active'); // بنضيف كلاس 'active' على الزرار الجديد اللي انداس عليه
+            
+            // بنخفي لوحة الزراير بتاعة الوضع القديم
+            document.getElementById(`${currentMode}-buttons`).classList.add('hidden');
+            // بنظهر لوحة الزراير بتاعة الوضع الجديد
+            document.getElementById(`${newMode}-buttons`).classList.remove('hidden');
+            
+            const isProgrammer = newMode === 'programmer'; // بنشوف هل الوضع الجديد هو وضع المبرمج ولا لأ
+            standardDisplay.classList.toggle('hidden', isProgrammer); // لو مبرمج، اخفي الشاشة العادية. لو مش مبرمج، اظهرها
+            programmerDisplay.classList.toggle('hidden', !isProgrammer); // لو مبرمج، اظهر شاشة المبرمج. لو مش مبرمج، اخفيها
+            
+            historyToggleBar.classList.toggle('hidden', isProgrammer); // اخفي زرار السجل في وضع المبرمج
+            historyPanel.classList.remove('open'); // اقفل لوحة السجل لو كانت مفتوحة
+            
+            currentMode = newMode; // بنحدّث متغير الوضع الحالي
+            resetCalculator(); // بنصفّر الآلة الحاسبة عشان نبدأ من جديد في الوضع الجديد
+        });
+        
+        // بنضيف event listener واحد بس على الحاوية الكبيرة بتاعة الزراير كلها (ده أفضل من إننا نعمل واحد لكل زرار)
+        allButtonsContainer.addEventListener('click', handleButtonClick);
+        
+        // دي الدالة اللي بتشتغل لما أي زرار ينداس عليه
+        function handleButtonClick(event) {
+            const button = event.target.closest('button'); // بنحدد أنهي زرار انداس عليه بالظبط
+            if (!button || button.disabled) return; // لو اللي انداس عليه مش زرار أو الزرار ده معطّل، متعملش حاجة
+            
+            playClickSound(); // شغل صوت الدوسة
+            const { action, value } = button.dataset; // بنستخلص نوع الأكشن والقيمة من الـ data attributes بتاعة الزرار
+            
+            // لو كنا لسه حاسبين ناتج، والمستخدم داس رقم أو علامة عشرية، يبقى هو عايز يبدأ عملية جديدة
+            if (justCalculated && ['number', 'decimal'].includes(action)) {
+                currentExpression = '0'; // بنصفر الشاشة
+            }
+            // بنلغي علامة "لسه حاسبين الناتج" لو المستخدم داس أي حاجة غير علامة حسابية أو يساوي
+            if (!['operator', 'calculate'].includes(action)) {
+                justCalculated = false;
+            }
+            
+            routeAction(action, value); // بنوجه الأكشن للدالة المناسبة حسب الوضع الحالي
+        }
+        
+        // دالة التوجيه: بتشوف احنا في أنهي وضع وبتبعت الأكشن للدالة المختصة
+        function routeAction(action, value) {
+            if (currentMode === 'programmer') {
+                handleProgrammerAction(action, value);
+            } else {
+                handleStandardAction(action, value);
+            }
+        }
+        
+        // الدالة اللي بتتعامل مع كل الأكشنز في الوضع العادي والعلمي
+        function handleStandardAction(action, value) {
+            // بنعمل object عشان نربط كل أكشن بالدالة بتاعته، ده أنضف من if..else كتير
+            const actions = {
+                number: () => appendToExpression(value), // لو الأكشن رقم
+                decimal: () => appendToExpression('.'), // لو الأكشن علامة عشرية
+                parenthesis: () => appendToExpression(value), // لو الأكشن قوس
+                operator: () => appendOperator(value), // لو الأكشن علامة حسابية (+, -, ..)
+                calculate: () => calculate(), // لو الأكشن يساوي
+                clear: () => resetCalculator(), // لو الأكشن مسح كلي (AC)
+                backspace: () => backspace(), // لو الأكشن مسح آخر رقم (DEL)
+                percent: () => applyPercent(), // لو الأكشن نسبة مئوية
+                square: () => applyUnaryOperator('square'), // لو الأكشن تربيع
+                sqrt: () => applyUnaryOperator('sqrt'), // لو الأكشن جذر تربيعي
+                sin: () => applyTrig('sin'), // ... وهكذا للدوال المثلثية
+                cos: () => applyTrig('cos'),
+                tan: () => applyTrig('tan'),
+            };
+            if(actions[action]) actions[action](); // بنشوف لو الأكشن موجود في الـ object، وبنشغل الدالة بتاعته
+            updateDisplay(); // في النهاية، بنحدّث شاشة العرض
+        }
+
+        // دالة الحساب الرئيسية
+        function calculate(isInternal = false) {
+            // isInternal ده عشان نميز بين لما المستخدم يدوس يساوي بنفسه، وبين لما بنحسب حاجة في الخلفية (زي في حالة التربيع)
+            if (currentExpression.trim() === '' || ['+', '-', '*', '/'].includes(currentExpression.trim().slice(-1))) return; // لو الشاشة فاضية أو آخر حاجة فيها علامة حسابية، متعملش حاجة
+            try {
+                // بنستخدم try...catch عشان لو حصل أي خطأ في الحساب (زي القسمة على صفر)، البرنامج ميتعطلش
+                let evalExpression = currentExpression.replace(/×/g, '*').replace(/÷/g, '/').trim(); // بنستبدل علامات الضرب والقسمة باللي الجافاسكريبت بتفهمهم
+                const result = new Function('return ' + evalExpression)(); // دي طريقة آمنة لتنفيذ الكود الحسابي
+                if (!isFinite(result)) throw new Error("Error"); // لو الناتج غير محدود (زي القسمة على صفر)، بنعتبره خطأ
+                
+                const formattedResult = parseFloat(result.toFixed(8)).toString(); // بنقرّب الناتج لـ 8 أرقام عشرية عشان منتوهش في الأرقام الطويلة
+                
+                if (!isInternal && currentMode !== 'programmer') { // لو المستخدم هو اللي داس يساوي
+                    const fullEntry = `${currentExpression.replace(/\s/g, '')} = ${formattedResult}`; // بنجهز شكل العملية كاملة عشان نحفظها في السجل
+                    historyDisplay.textContent = fullEntry; // بنعرضها في الشاشة الصغيرة اللي فوق
+                    history.push(fullEntry); // بنضيفها لأراي السجل
+                    renderHistory(); // بنعيد رسم لوحة السجل عشان العملية الجديدة تظهر
+                    justCalculated = true; // بنرفع علامة إننا لسه حاسبين ناتج
+                }
+                currentExpression = formattedResult; // بنخلي الناتج هو اللي يظهر على الشاشة الرئيسية عشان لو المستخدم حب يكمل عليه
+            } catch (error) { // لو حصل أي خطأ
+                currentExpression = 'Error'; // بنعرض كلمة خطأ على الشاشة
+                justCalculated = true; // بنرفع علامة الخطأ
+            }
+        }
+        
+        // --- دوال وضع المبرمج ---
+        
+        // بتحدد نظام العد النشط (HEX, DEC, etc.)
+        function setActiveProgrammerBase(base) {
+            programmerBase = parseInt(base); // بنحدّث متغير نظام العد
+            document.querySelector('.programmer-base-label.active')?.classList.remove('active'); // بنشيل التحديد من على النظام القديم
+            const newActiveLabel = document.querySelector(`.programmer-base-label[data-base="${base}"]`); // بنمسك ليبل النظام الجديد
+            if (newActiveLabel) {
+                newActiveLabel.classList.add('active'); // بنضيفله كلاس التحديد
+            }
+        }
+        
+        // بنضيف event listener لكل ليبل بتاع نظام عد
+        document.querySelectorAll('.programmer-base-label').forEach(label => {
+            label.addEventListener('click', () => {
+                playClickSound();
+                const newBase = parseInt(label.dataset.base); // بنجيب قيمة النظام الجديد
+                setActiveProgrammerBase(newBase); // بنفعّل النظام الجديد
+                const currentDecimalValue = parseInt(decDisplay.textContent, 10) || 0; // بنجيب القيمة العشرية الحالية عشان نحولها للنظام الجديد
+                updateProgrammerDisplays(currentDecimalValue); // بنحدّث كل شاشات العرض
+                updateProgrammerButtonStates(); // بنعطل أو نشغل الزراير حسب النظام الجديد
+            });
+        });
+        
+        // بتتعامل مع دوسات الزراير في وضع المبرمج
+        function handleProgrammerAction(action, value) {
+            let currentDecimal = 0; // متغير عشان نخزن فيه القيمة العشرية
+            if (action === 'number') {
+                const currentValStr = currentExpression === '0' ? '' : currentExpression;
+                const newValue = currentValStr + value;
+                currentDecimal = parseInt(newValue, programmerBase) || 0; // بنحول اللي مكتوب من النظام الحالي للعشري
+            } else if (action === 'clear') {
+                currentDecimal = 0; // تصفير
+            } else if (action === 'backspace') {
+                const newValue = currentExpression.length > 1 ? currentExpression.slice(0, -1) : '0';
+                currentDecimal = parseInt(newValue, programmerBase) || 0; // بنمسح آخر رقم ونرجع نحول
+            } else {
+                 currentDecimal = parseInt(currentExpression, programmerBase) || 0;
+            }
+            updateProgrammerDisplays(currentDecimal); // بنحدّث كل الشاشات بالقيمة العشرية الجديدة
+        }
+
+        // بتحدّث شاشات العرض الأربعة (HEX, DEC, OCT, BIN) بناءً على قيمة عشرية
+        function updateProgrammerDisplays(decimalValue) {
+            if (isNaN(decimalValue)) decimalValue = 0;
+            decimalValue = Math.trunc(decimalValue); // بنشتغل على أرقام صحيحة بس
+            
+            // بنحول القيمة العشرية لكل نظام ونعرضها في مكانها
+            currentExpression = decimalValue.toString(programmerBase).toUpperCase();
+            hexDisplay.textContent = decimalValue.toString(16).toUpperCase() || '0';
+            decDisplay.textContent = decimalValue.toString(10) || '0';
+            octDisplay.textContent = decimalValue.toString(8) || '0';
+            binDisplay.textContent = decimalValue.toString(2) || '0';
+        }
+        
+        // بتعطّل الزراير اللي متنفعش في نظام العد الحالي
+        function updateProgrammerButtonStates() {
+            document.querySelectorAll('#programmer-buttons [data-action="number"]').forEach(btn => {
+                const value = btn.dataset.value;
+                const isHexChar = ['A', 'B', 'C', 'D', 'E', 'F'].includes(value); // هل الزرار حرف؟
+                const isDigit = !isNaN(parseInt(value)); // هل الزرار رقم؟
+                
+                if (programmerBase < 16 && isHexChar) {
+                    btn.disabled = true; // لو النظام مش سداسي عشري، عطل الحروف
+                } else if (isDigit && parseInt(value) >= programmerBase) {
+                    btn.disabled = true; // لو الرقم بتاع الزرار أكبر من أساس النظام، عطله (مينفعش تكتب 8 في النظام الثماني مثلاً)
+                } else {
+                    btn.disabled = false; // غير كده، خلّي الزرار شغال
+                }
+            });
+        }
+        
+        // --- دوال مساعدة ---
+        
+        // دالة التصفير
+        function resetCalculator() {
+            currentExpression = '0'; // رجّع الشاشة لـ "0"
+            historyDisplay.textContent = ''; // فضّي شاشة السجل الصغيرة
+            justCalculated = false; // شيل علامة "لسه حاسبين"
+            if (currentMode === 'programmer') {
+                setActiveProgrammerBase(10); // لو في وضع المبرمج، رجّع النظام للعشري
+                updateProgrammerButtonStates();
+                updateProgrammerDisplays(0);
+            } else {
+                 updateDisplay(); // في أي وضع تاني، حدّث الشاشة بس
+            }
+        }
+        
+        // دالة مسح آخر خانة
+        function backspace() {
+            if (currentExpression === 'Error' || justCalculated) {
+                resetCalculator(); return; // لو الشاشة عليها "Error" أو لسه حاسبين، خلّي الزرار ده يشتغل زي AC
+            }
+            if (currentExpression.length > 1) { // لو فيه أكتر من رقم
+                currentExpression = currentExpression.slice(0, -1).trim(); // امسح آخر حرف
+                 if(currentExpression === "") currentExpression = "0"; // لو فضيت خالص، رجعها صفر
+            } else { // لو فيه رقم واحد بس
+                currentExpression = '0'; // خليه صفر
+            }
+        }
+        
+        // دالة إضافة رقم أو علامة عشرية
+        function appendToExpression(val) {
+             if (currentExpression === '0' && val !== '.') currentExpression = val; // لو الشاشة عليها صفر بس، شيل الصفر وحط الرقم الجديد
+             else if (val === '.' && currentExpression.includes('.')) return; // لو المستخدم بيحاول يضيف علامة عشرية وهي موجودة أصلًا، متعملش حاجة
+             else currentExpression += val; // غير كده، ضيف الرقم للشاشة
+        }
+        
+        // دالة إضافة علامة حسابية
+        function appendOperator(op) {
+             if (currentExpression !== 'Error' && !currentExpression.endsWith(' ')) currentExpression += op; // ضيف العلامة بس بشرط ميكونش فيه خطأ أو علامة تانية في الآخر
+        }
+        
+        // دالة العمليات الأحادية (زي التربيع والجذر)
+        function applyUnaryOperator(op) {
+            try {
+                const val = new Function('return ' + currentExpression)(); // احسب القيمة الحالية
+                if (op === 'square') currentExpression = `Math.pow(${val}, 2)`; // جهز عملية التربيع
+                if (op === 'sqrt') currentExpression = `Math.sqrt(${val})`; // جهز عملية الجذر
+                calculate(true); // احسب الناتج في الخلفية واعرضه
+            } catch(e) { currentExpression = "Error"; }
+        }
+        
+        // دالة الدوال المثلثية
+        function applyTrig(op){
+            try{
+                const val = new Function('return ' + currentExpression)();
+                const angle = isRadian ? val : val * Math.PI / 180; // حول من درجات لراديان لو محتاج
+                currentExpression = `Math.${op}(${angle})`; // جهز العملية
+                calculate(true); // احسب واعرض الناتج
+            } catch(e) { currentExpression = "Error"; }
+        }
+        
+        // دالة النسبة المئوية
+        function applyPercent() {
+             try { currentExpression = (new Function('return ' + currentExpression)() / 100).toString(); } catch(e){}
+        }
+        
+        // دالة تحديث الشاشة الرئيسية
+        function updateDisplay() {
+            if (currentMode !== 'programmer') {
+                 // بنبدل الرموز اللي الجافاسكريبت بتفهمها برموز شكلها أحلى للمستخدم
+                 expressionDisplay.textContent = currentExpression.replace(/\*/g, '×').replace(/\//g, '÷');
+            }
+        }
+        
+        // --- دوال السجل ---
+        
+        // دالة مسح عنصر واحد من السجل
+        function deleteHistoryItem(indexToDelete) {
+            history.splice(indexToDelete, 1); // امسح العنصر من الأراي بتاعه
+            renderHistory(); // اعرض السجل من جديد بعد المسح
+        }
+        
+        // دالة عرض السجل بالكامل
+        function renderHistory() {
+            if (history.length === 0) { // لو السجل فاضي
+                historyLog.innerHTML = `<p class="text-center text-gray-500 dark:text-gray-400">لا يوجد سجل بعد</p>`; // اعرض رسالة إنه فاضي
+                return;
+            }
+            historyLog.innerHTML = ''; // فضّي اللوحة قبل ما تعرض من جديد
+            const reversedHistory = [...history].reverse(); // بنعمل نسخة معكوسة من السجل عشان نعرض الجديد فوق
+            reversedHistory.forEach((item, reversedIndex) => {
+                const originalIndex = history.length - 1 - reversedIndex; // بنحسب الإندكس الأصلي عشان لما نيجي نمسح نمسح صح
+                
+                // بنبني عنصر HTML لكل عملية في السجل
+                const itemContainer = document.createElement('div');
+                itemContainer.className = 'flex justify-between items-center hover:bg-gray-300/60 dark:hover:bg-gray-600/60 rounded-lg p-2 transition-colors';
+                
+                const p = document.createElement('p');
+                p.className = 'history-item-text flex-grow cursor-pointer';
+                p.textContent = item;
+                // لما المستخدم يدوس على عملية قديمة
+                p.addEventListener('click', () => {
+                    playClickSound();
+                    const expressionPart = item.split(' = ')[0]; // بنجيب الجزء اللي قبل "يساوي"
+                    currentExpression = expressionPart.replace(/×/g, ' * ').replace(/÷/g, ' / '); // بنرجعها للشاشة
+                    justCalculated = false;
+                    updateDisplay();
+                    historyPanel.classList.remove('open'); // بنقفل لوحة السجل
+                });
+                
+                const deleteBtn = document.createElement('button'); // بنعمل زرار مسح لكل عملية
+                deleteBtn.className = 'text-red-500/80 hover:text-red-600 dark:text-red-400/80 dark:hover:text-red-500 w-7 h-7 flex items-center justify-center rounded-full transition-colors';
+                deleteBtn.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>`;
+                deleteBtn.addEventListener('click', (e) => {
+                    e.stopPropagation(); // عشان لما ندوس على زرار المسح، الدوسة متوصلش للعملية نفسها
+                    playClickSound();
+                    deleteHistoryItem(originalIndex); // بنمسح العملية دي بس
+                });
+                
+                itemContainer.appendChild(p);
+                itemContainer.appendChild(deleteBtn);
+                historyLog.appendChild(itemContainer); // بنضيف العنصر اللي بنيناه للوحة السجل
+            });
+        }
+        
+        // --- أول ما الصفحة تحمل ---
+        document.addEventListener('DOMContentLoaded', () => {
+            // بنشوف لو المستخدم كان مختار ثيم معين وخزناه في الـ local storage
+            const savedTheme = localStorage.getItem('calculator-theme');
+            // بنشوف إيه الإعداد الافتراضي للمتصفح أو نظام التشغيل (فاتح ولا غامق)
+            const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            
+            if (savedTheme) { applyTheme(savedTheme); } // لو فيه ثيم متخزن، طبقه
+            else if (prefersDark) { applyTheme('dark'); } // لو مفيش، شوف إعداد المتصفح
+            else { applyTheme('light'); } // لو كل ده لأ، يبقى الوضع الفاتح هو الأساس
+            
+            applySoundState(); // بنطبق حالة أيقونة الصوت
+            resetCalculator(); // بنصفر الآلة الحاسبة عشان تبقى جاهزة
+        });
+
+        // لما المستخدم يدوس على شريط السجل
+        historyToggleBar.addEventListener('click', () => {
+            playClickSound();
+            historyPanel.classList.toggle('open'); // اعكس حالة لوحة السجل (لو مفتوحة اقفلها، والعكس)
+        });
+        
+        // لما المستخدم يدوس على زرار مسح السجل
+        clearHistoryBtn.addEventListener('click', () => {
+            playClickSound();
+            history = []; // فضّي أراي السجل
+            renderHistory(); // اعرض السجل وهو فاضي
+        });
+    </script>
+</body>
+</html>
